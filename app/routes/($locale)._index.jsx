@@ -41,6 +41,7 @@ export default function Homepage() {
 function FeaturedCollection({collection}) {
   if (!collection) return null;
   const image = collection?.image;
+  const first_product = collection.products.nodes.length > 0 ? collection.products.nodes[0] : null;
   return (
     <Link
       className="featured-collection"
@@ -50,9 +51,11 @@ function FeaturedCollection({collection}) {
         <div className="featured-collection-image">
           <Image data={image} sizes="100vw" />
         </div>
-      ) : (
-        <span>Default Image</span>
-      )}
+      ) : first_product?.images.nodes.length > 0 ? (
+        <div className="featured-collection-image">
+          <Image data={first_product?.images.nodes[0]} sizes="100vw" />
+        </div>
+      ) : null }
       <h1>{collection.title}</h1>
     </Link>
   );
@@ -109,6 +112,19 @@ const FEATURED_COLLECTION_QUERY = `#graphql
       height
     }
     handle
+    products(first:1) {
+      nodes {
+        images(first:1) {
+          nodes {
+            id
+            url
+            altText
+            width
+            height
+          }
+        }
+      }
+    }
   }
   query FeaturedCollection($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
