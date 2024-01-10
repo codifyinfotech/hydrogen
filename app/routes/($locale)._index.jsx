@@ -46,10 +46,12 @@ function FeaturedCollection({collection}) {
       className="featured-collection"
       to={`/collections/${collection.handle}`}
     >
-      {image && (
+      {image ? (
         <div className="featured-collection-image">
           <Image data={image} sizes="100vw" />
         </div>
+      ) : (
+        <span>Image</span>
       )}
       <h1>{collection.title}</h1>
     </Link>
