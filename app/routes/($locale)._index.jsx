@@ -51,7 +51,7 @@ function FeaturedCollection({collection}) {
           <Image data={image} sizes="100vw" />
         </div>
       ) : (
-        <span>Image</span>
+        <span>Default Image</span>
       )}
       <h1>{collection.title}</h1>
     </Link>
